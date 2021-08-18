@@ -21,7 +21,10 @@ To use this command effectively, there are two main steps:
     g. In your discord server, go to #world-clocks and execute the command (e.g. -clocks).
 
 NOTE:
-It is recommended that you only run this command ONCE in your server so that only one set of clocks exists at any one time. If multiple clocks are created the command may be rate-limited by Discord and as a result all clocks may stop working altogether. Ideally, the command should be executed in a dedicated #world-clocks channel with Send Message permissions disabled as described above to ensure only once instance of the command is running.
+It is recommended that you only run this command ONCE in your server so that only one set of clocks exists at any one time.
+If multiple clocks are created the command may be rate-limited by Discord and as a result all clocks may stop working altogether.
+Ideally, the command should be executed in a dedicated #world-clocks channel with Send Message permissions disabled as described
+above to ensure only once instance of the command is running.
 
 */}}
 
