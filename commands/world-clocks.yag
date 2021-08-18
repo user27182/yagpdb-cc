@@ -1,0 +1,223 @@
+{{/*
+This custom command prints a series of world clocks to a message.
+The bot automatically updates the times in near real-time (typically <5 second delay).
+To stop the clocks, simply delete the message which contains the clocks.
+
+Create by: user27182
+Last updated: 2021-Aug-17
+
+To use this command effectively, there are two main steps:
+(1) In Discord:
+    a. Create a new channel called #world-clocks.
+    b. Disable "Send Message" permissions in the new channel.
+
+(2) In the YAGPDB.xyz control panel:
+    a. Create a new custom command in the YAGPDB.xyz control panel.
+    b. Choose "Command" as the trigger type (note: "Command" is the default type and should already be selected).
+    c. Give the command a trigger of your choice (e.g. "clocks").
+    d. Copy all code from this file into the new command.
+    e. Modify the channel and role restrictions so that the code can only be executed in #world-clocks and by Administrator roles only.
+    f. Save the command.
+    g. In your discord server, go to #world-clocks and execute the command (e.g. -clocks).
+
+NOTE:
+It is recommended that you only run this command ONCE in your server so that only one set of clocks exists at any one time. If multiple clocks are created the command may be rate-limited by Discord and as a result all clocks may stop working altogether. Ideally, the command should be executed in a dedicated #world-clocks channel with Send Message permissions disabled as described above to ensure only once instance of the command is running.
+
+*/}}
+
+{{ deleteTrigger 0 }}
+{{ if (not .ExecData) }} {{/* initialize clock */}}
+    {{ $msgID := sendMessageRetID nil "Starting :clock: clocks... please wait." }}
+    {{ dbSet 666 "clocksMsgID" (str $msgID) }}
+
+    {{/* start executing clock when next minute rolls over */}}
+    {{ $delay := (sub 61 (currentTime.Format "05")) }}
+    {{ execCC .CCID .Channel.ID $delay "run" }}
+
+{{ else }} {{/* else, if any execdata is passed, the clock will execute its update routine */}}
+{{ $msgID := (dbGet 666 "clocksMsgID").Value }}
+
+{{ $timeFormat := "2-Jan  15:04" }}
+{{ $strFormat := "`%-11s %-13s`%s\n" }}
+
+{{/**************************************************************************/}}
+{{ $city := "Vancouver" }}
+{{ $tz := "America/Vancouver" }} {{/* Select timezone from http://kevalbhatt.github.io/timezone-picker */}}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tVancouver :=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Chicago" }}
+{{ $tz := "America/Chicago" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tChicago:=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "New York" }}
+{{ $tz := "America/New_York" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tNewYork :=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "London" }}
+{{ $tz := "Europe/London" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tLondon :=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Paris" }}
+{{ $tz := "Europe/Paris" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tParis :=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Moscow" }}
+{{ $tz := "Europe/Moscow" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tMoscow:=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "New Delhi" }}
+{{ $tz := "Asia/Kolkata" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tNewDelhi:=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Bangkok" }}
+{{ $tz := "Asia/Bangkok" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tBangkok:=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Shanghai" }}
+{{ $tz := "Asia/Shanghai" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tShanghai :=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Tokyo" }}
+{{ $tz := "Asia/Tokyo" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tTokyo :=  (printf $strFormat $city $timeStr $clock) }}
+
+
+{{/**************************************************************************/}}
+{{ $city := "Sydney" }}
+{{ $tz := "Australia/Sydney" }}
+
+{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
+{{ $time := currentTime.In $location }}
+{{ $timeStr := ($time.Format $timeFormat) }}
+{{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
+{{ $clock := (joinStr "" ":clock" $h $m ":") }}
+
+{{ $tSydney :=  (printf $strFormat $city $timeStr $clock) }}
+
+{{/**************************************************************************/}}
+
+
+{{ $americas   := "\n__***Americas***__\n" }}
+{{ $europe      := "\n__***Europe***__\n" }}
+{{ $asiaPacific := "\n__***Asia-Pacific***__\n" }}
+
+{{ $timeList := (joinStr ""
+
+$americas
+$tVancouver 
+$tChicago
+$tNewYork
+
+$europe
+$tLondon
+$tParis
+$tMoscow
+
+$asiaPacific
+$tNewDelhi
+$tBangkok
+$tShanghai
+$tTokyo
+$tSydney
+)}}
+
+{{if getMessage nil $msgID }} {{/* update clocks if the message still exists */}}
+    {{ editMessage .Channel.ID $msgID $timeList }}
+    
+    {{/* restart execution of this CC to update the clock */}}
+    {{/* to avoid making too many CC calls, use a timer to limit CC calls to just before and just after the minute rolls over */}}
+    {{ if (and (lt currentTime.Second 10) (gt currentTime.Second 1) ) }}
+    {{ execCC .CCID .Channel.ID 53 "run" }} {{ else }} {{ execCC .CCID .Channel.ID 4 "run" }} {{ end }}
+{{ else }}
+    {{ "The :clock: clocks have been deleted. The ticking has stopped." }}
+{{ end }}
+
+{{end}} {{/* end clock execution */}}
