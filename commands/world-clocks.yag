@@ -3,7 +3,7 @@ This custom command prints a series of world clocks to a message.
 The bot automatically updates the times in near real-time (typically <5 second delay).
 To stop the clocks, simply delete the message which contains the clocks.
 
-Create by: user27182
+Created by: user27182
 Last updated: 2021-Aug-17
 
 To use this command effectively, there are two main steps:
