@@ -28,14 +28,13 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ deleteTrigger 0 }}
 {{ if (not .ExecData) }} {{/* initialize clock */}}
     {{ $msgID := sendMessageRetID nil "Starting :clock: clocks... please wait." }}
-    {{ dbSet 666 "clocksMsgID" (str $msgID) }}
 
     {{/* start executing clock when next minute rolls over */}}
     {{ $delay := (sub 61 (currentTime.Format "05")) }}
-    {{ execCC .CCID .Channel.ID $delay "run" }}
+    {{ execCC .CCID .Channel.ID $delay $msgID }}
 
 {{ else }} {{/* else, if any execdata is passed, the clock will execute its update routine */}}
-{{ $msgID := (dbGet 666 "clocksMsgID").Value }}
+{{  $msgID := .ExecData }}
 
 {{ $timeFormat := "15:04  UTC-0700" }}
 {{ $strFormat := "`%-10s` %s `%s`\n" }}
@@ -215,7 +214,7 @@ $tSydney
     {{/* restart execution of this CC to update the clock */}}
     {{/* to avoid making too many CC calls, use a timer to limit CC calls to just before and just after the minute rolls over */}}
     {{ if (and (lt currentTime.Second 10) (gt currentTime.Second 1) ) }}
-    {{ execCC .CCID .Channel.ID 53 "run" }} {{ else }} {{ execCC .CCID .Channel.ID 4 "run" }} {{ end }}
+    {{ execCC .CCID .Channel.ID 52 $msgID }} {{ else }} {{ execCC .CCID .Channel.ID 4 $msgID }} {{ end }}
 {{ else }}
     {{ "The :clock: clocks have been deleted. The ticking has stopped." }}
 {{ end }}
