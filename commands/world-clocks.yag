@@ -21,10 +21,7 @@ To use this command effectively, there are two main steps:
     g. In your discord server, go to #world-clocks and execute the command (e.g. -clocks).
 
 NOTE:
-It is recommended that you only run this command ONCE in your server so that only one set of clocks exists at any one time.
-If multiple clocks are created the command may be rate-limited by Discord and as a result all clocks may stop working altogether.
-Ideally, the command should be executed in a dedicated #world-clocks channel with Send Message permissions disabled as described
-above to ensure only once instance of the command is running.
+It is recommended that you only run this command ONCE in your server so that only one set of clocks exists at any one time. If multiple clocks are created the command may be rate-limited by Discord and as a result all clocks may stop working altogether. Ideally, the command should be executed in a dedicated #world-clocks channel with Send Message permissions disabled as described above to ensure only one instance of the command is running.
 
 */}}
 
@@ -40,8 +37,8 @@ above to ensure only once instance of the command is running.
 {{ else }} {{/* else, if any execdata is passed, the clock will execute its update routine */}}
 {{ $msgID := (dbGet 666 "clocksMsgID").Value }}
 
-{{ $timeFormat := "2-Jan  15:04" }}
-{{ $strFormat := "`%-11s %-13s`%s\n" }}
+{{ $timeFormat := "15:04  UTC-0700" }}
+{{ $strFormat := "`%-10s` %s `%s`\n" }}
 
 {{/**************************************************************************/}}
 {{ $city := "Vancouver" }}
@@ -53,7 +50,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tVancouver :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tVancouver :=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -66,7 +63,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tChicago:=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tChicago:=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -79,7 +76,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tNewYork :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tNewYork :=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -92,7 +89,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tLondon :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tLondon :=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -105,7 +102,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tParis :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tParis :=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -118,7 +115,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tMoscow:=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tMoscow:=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -131,7 +128,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tNewDelhi:=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tNewDelhi:=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -144,11 +141,11 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tBangkok:=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tBangkok:=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
-{{ $city := "Shanghai" }}
+{{ $city := "Beijing" }}
 {{ $tz := "Asia/Shanghai" }}
 
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
@@ -157,7 +154,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tShanghai :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tShanghai :=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -170,7 +167,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tTokyo :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tTokyo :=  (printf $strFormat $city $clock $timeStr) }}
 
 
 {{/**************************************************************************/}}
@@ -183,7 +180,7 @@ above to ensure only once instance of the command is running.
 {{ $h := ($time.Format "3") }} {{ $m := $time.Minute }} {{ if (gt $m 29) }} {{ $m = (str 30) }} {{ else }} {{ $m = "" }} {{ end }}
 {{ $clock := (joinStr "" ":clock" $h $m ":") }}
 
-{{ $tSydney :=  (printf $strFormat $city $timeStr $clock) }}
+{{ $tSydney :=  (printf $strFormat $city $clock $timeStr) }}
 
 {{/**************************************************************************/}}
 
