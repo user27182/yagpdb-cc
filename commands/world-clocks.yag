@@ -4,7 +4,7 @@ The bot automatically updates the times in near real-time (typically <5 second d
 To stop the clocks, simply delete the message which contains the clocks.
 
 Created by: user27182
-Last updated: 2021-Aug-19
+Last updated: 2021-Sep-10
 
 To use this command effectively, there are two main steps:
 (1) In Discord:
@@ -52,7 +52,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $strFormat := "*%s*\n %s`%7s %s`\n" }}
 
 
-{{ $city := "Vancouver" }}
+{{ $city := "Vancouver 🇨🇦" }}
 {{ $tz := "America/Vancouver" }} {{/* Select timezone from http://kevalbhatt.github.io/timezone-picker */}}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -63,7 +63,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tVancouver :=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Chicago" }}
+{{ $city := "Chicago 🇺🇸" }}
 {{ $tz := "America/Chicago" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -74,7 +74,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tChicago:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "New York" }}
+{{ $city := "New York 🇺🇸" }}
 {{ $tz := "America/New_York" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -85,7 +85,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tNewYork:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "London" }}
+{{ $city := "London 🇬🇧" }}
 {{ $tz := "Europe/London" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -96,7 +96,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tLondon:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Paris" }}
+{{ $city := "Paris 🇫🇷" }}
 {{ $tz := "Europe/Paris" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -107,7 +107,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tParis:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Moscow" }}
+{{ $city := "Moscow 🇷🇺" }}
 {{ $tz := "Europe/Moscow" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -118,7 +118,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tMoscow :=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "New Delhi" }}
+{{ $city := "New Delhi 🇮🇳" }}
 {{ $tz := "Asia/Kolkata" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -129,7 +129,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tNewDelhi:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Bangkok" }}
+{{ $city := "Bangkok 🇹🇭" }}
 {{ $tz := "Asia/Bangkok" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -140,7 +140,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tBangkok :=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Beijing" }}
+{{ $city := "Beijing 🇨🇳" }}
 {{ $tz := "Asia/Shanghai" }}{{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
 {{ $tStr1 := ($time.Format $tFormat1) }}
@@ -150,7 +150,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tBeijing:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Tokyo" }}
+{{ $city := "Tokyo 🇯🇵" }}
 {{ $tz := "Asia/Tokyo" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -161,7 +161,7 @@ It is recommended that you only run this command ONCE in your server so that onl
 {{ $tTokyo:=  (printf $strFormat $city $clock $tStr1 $tStr2) }}
 
 
-{{ $city := "Sydney" }}
+{{ $city := "Sydney 🇦🇺" }}
 {{ $tz := "Australia/Sydney" }}
 {{ $location := (newDate 0 0 0 0 0 0 $tz).Location }}
 {{ $time := currentTime.In $location }}
@@ -204,9 +204,9 @@ $tSydney
     {{/* restart execution of this CC to update the clock */}}
     {{/* to avoid making too many CC calls, use a timer to limit CC calls to just before and just after the minute rolls over */}}
     {{ if (and (lt currentTime.Second 10) (gt currentTime.Second 0) ) }}
-    {{ execCC .CCID .Channel.ID 55 $msgID }} {{ else }} {{ execCC .CCID .Channel.ID 2 $msgID }} {{ end }}
+    {{ execCC .CCID .Channel.ID 54 $msgID }} {{ else }} {{ execCC .CCID .Channel.ID 3 $msgID }} {{ end }}
 {{ else }}
-    {{- "The :clock: clocks have been deleted. The ticking has stopped." -}}
+    {{/* - "The :clock: clocks have been deleted. The ticking has stopped." - */}}
 {{ end }}
 
 {{end}} {{/* end clock execution */}}
